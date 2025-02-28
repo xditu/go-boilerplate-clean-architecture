@@ -1,7 +1,15 @@
 package main
 
-import "fmt"
+import (
+	"go-boilerplate-clean-architecture/frameworks-drivers"
+	"go-boilerplate-clean-architecture/frameworks-drivers/controllers"
+)
 
 func main() {
-	fmt.Println("Hello, World!")
+	userRepository := frameworks_drivers.NewMemUserRepository()
+	uController := controllers.NewUserController(userRepository)
+	hwController := controllers.NewHelloWorldController()
+
+	s := frameworks_drivers.NewServer(8080, hwController, uController)
+	s.Serve()
 }
