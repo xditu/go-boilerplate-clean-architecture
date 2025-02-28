@@ -1,6 +1,6 @@
 package enterprise
 
-type UserRepository interface {
+type UserRepositories interface {
 	Add(u *User) error
 	Remove(u User) error
 	Update(u User) error

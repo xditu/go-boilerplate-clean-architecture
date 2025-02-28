@@ -19,6 +19,6 @@ func (uc *UserController) CreateUserController(w http.ResponseWriter, r *http.Re
 	}
 }
 
-func NewUserController(repository enterprise.UserRepository) *UserController {
+func NewUserController(repository enterprise.UserRepositories) *UserController {
 	return &UserController{UserCase: application.NewCreateUser(repository)}
 }

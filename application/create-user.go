@@ -5,7 +5,7 @@ import (
 )
 
 type CreateUserUseCase struct {
-	UserRepo enterprise.UserRepository
+	UserRepo enterprise.UserRepositories
 }
 
 func (uc *CreateUserUseCase) Execute(name, lastname, username string) (*enterprise.User, error) {
@@ -24,6 +24,6 @@ func (uc *CreateUserUseCase) Execute(name, lastname, username string) (*enterpri
 	return &user, nil
 }
 
-func NewCreateUser(repo enterprise.UserRepository) *CreateUserUseCase {
+func NewCreateUser(repo enterprise.UserRepositories) *CreateUserUseCase {
 	return &CreateUserUseCase{UserRepo: repo}
 }

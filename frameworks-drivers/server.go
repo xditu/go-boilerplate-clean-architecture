@@ -5,6 +5,7 @@ import (
 	"go-boilerplate-clean-architecture/frameworks-drivers/controllers"
 	"go-boilerplate-clean-architecture/frameworks-drivers/routes"
 	"net/http"
+	"strconv"
 )
 
 type Server struct {
@@ -12,7 +13,7 @@ type Server struct {
 }
 
 func (o *Server) Serve() {
-	if err := http.ListenAndServe(":8080", nil); err != nil {
+	if err := http.ListenAndServe(":"+strconv.Itoa(o.Port), nil); err != nil {
 		fmt.Println("Listening on port :8080")
 	}
 }
