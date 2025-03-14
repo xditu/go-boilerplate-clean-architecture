@@ -5,6 +5,8 @@ import (
 )
 
 type CreateUserUseCase struct {
+	// UserRepo is an interface that defines the methods required for user repository operations.
+	// It is used to interact with the underlying data storage for user-related actions.
 	UserRepo enterprise.UserRepositories
 }
 

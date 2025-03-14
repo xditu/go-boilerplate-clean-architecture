@@ -1,4 +1,4 @@
-package controllers
+package interface_adapters
 
 import (
 	"encoding/json"
@@ -7,11 +7,11 @@ import (
 	"net/http"
 )
 
-type UserController struct {
+type UserAdapter struct {
 	UserCase *application.CreateUserUseCase
 }
 
-func (uc *UserController) CreateUserController(w http.ResponseWriter, r *http.Request) {
+func (uc *UserAdapter) CreateUserAdapter(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	err := json.NewEncoder(w).Encode(Response{Message: "Hello, World!"})
 	if err != nil {
@@ -19,6 +19,6 @@ func (uc *UserController) CreateUserController(w http.ResponseWriter, r *http.Re
 	}
 }
 
-func NewUserController(repository enterprise.UserRepositories) *UserController {
-	return &UserController{UserCase: application.NewCreateUser(repository)}
+func NewUserAdapter(repository enterprise.UserRepositories) *UserAdapter {
+	return &UserAdapter{UserCase: application.NewCreateUser(repository)}
 }

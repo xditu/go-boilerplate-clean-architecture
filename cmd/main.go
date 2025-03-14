@@ -1,16 +1,32 @@
 package main
 
 import (
-	"go-boilerplate-clean-architecture/frameworks-drivers"
+	"fmt"
 	"go-boilerplate-clean-architecture/frameworks-drivers/controllers"
 	"go-boilerplate-clean-architecture/frameworks-drivers/database"
+	interface_adapters "go-boilerplate-clean-architecture/interface-adapters"
+	"sync"
 )
 
 func main() {
 	userRepository := database.NewMemUserRepository()
-	uController := controllers.NewUserController(userRepository)
-	hwController := controllers.NewHelloWorldController()
+	uController := interface_adapters.NewUserAdapter(userRepository)
+	hwController := interface_adapters.NewHelloWorldAdapter()
+	s := controllers.NewServerHTTP(8081, hwController, uController)
 
-	s := frameworks_drivers.NewServer(8081, hwController, uController)
-	s.Serve()
+	var wg sync.WaitGroup
+	wg.Add(2)
+
+	go func() {
+		defer wg.Done()
+		s.ServeHTTP()
+	}()
+
+	go func() {
+		defer wg.Done()
+		controllers.StartGRPCServer()
+	}()
+
+	fmt.Println("Starting servers...")
+	wg.Wait()
 }
